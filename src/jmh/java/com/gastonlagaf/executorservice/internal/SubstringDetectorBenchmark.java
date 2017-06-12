@@ -21,7 +21,7 @@ public class SubstringDetectorBenchmark {
 	@Benchmark
 	@BenchmarkMode(Mode.AverageTime)
 	@OutputTimeUnit(TimeUnit.NANOSECONDS)
-	public void measureAverageTime(SubstringDetectorProvider sdp) {
+	public void measureAverageTimeKMP(SubstringDetectorProvider sdp) {
 		sdp.sd.detectSubstringKMP("abcdddabdddaabcddbcadddaaaabcbabdbababbbaadbddbddabdabadddabdabababababfbebsbabsdbfaefbawefbddddabadbabefawebgaewfbawebfawefbawefbawefbawefbawefbfaew"
 				+ "bfaewbfbafbafawuibfawibfawgiorboaebgfuoauwgpawrgfaubhfpgawghfabaaaabbbdbdbadddbaadababbaaabbbaabbbbabebfpoabupfbabbbaaabbaabdddabbdbaebdddbbbdabibaevvbddbaadddda"
 				+ "fafjpoajfpdddapojpfjewpfadaddagfewgrgpojdddbojkpoawgdadddajpajpfajegfaddpojagjpajgawjrgesgsejphddaiojgrepadddddadogihjserghesrgnvarhgaddddafweafergeshlop;lhdddddd", "ddda");
@@ -32,6 +32,15 @@ public class SubstringDetectorBenchmark {
 	@OutputTimeUnit(TimeUnit.NANOSECONDS)
 	public void measureAverageTimeOfLinearAlgorithm(SubstringDetectorProvider sdp) {
 		sdp.sd.detectSubstringLinear("abcdddabdddaabcddbcadddaaaabcbabdbababbbaadbddbddabdabadddabdabababababfbebsbabsdbfaefbawefbddddabadbabefawebgaewfbawebfawefbawefbawefbawefbawefbfaew"
+				+ "bfaewbfbafbafawuibfawibfawgiorboaebgfuoauwgpawrgfaubhfpgawghfabaaaabbbdbdbadddbaadababbaaabbbaabbbbabebfpoabupfbabbbaaabbaabdddabbdbaebdddbbbdabibaevvbddbaadddda"
+				+ "fafjpoajfpdddapojpfjewpfadaddagfewgrgpojdddbojkpoawgdadddajpajpfajegfaddpojagjpajgawjrgesgsejphddaiojgrepadddddadogihjserghesrgnvarhgaddddafweafergeshlop;lhdddddd", "ddda");
+	}
+	
+	@Benchmark
+	@BenchmarkMode(Mode.AverageTime)
+	@OutputTimeUnit(TimeUnit.NANOSECONDS)
+	public void measureAverageTimeOfBowerMourAlgorithm(SubstringDetectorProvider sdp) {
+		sdp.sd.detectSubstringBM("abcdddabdddaabcddbcadddaaaabcbabdbababbbaadbddbddabdabadddabdabababababfbebsbabsdbfaefbawefbddddabadbabefawebgaewfbawebfawefbawefbawefbawefbawefbfaew"
 				+ "bfaewbfbafbafawuibfawibfawgiorboaebgfuoauwgpawrgfaubhfpgawghfabaaaabbbdbdbadddbaadababbaaabbbaabbbbabebfpoabupfbabbbaaabbaabdddabbdbaebdddbbbdabibaevvbddbaadddda"
 				+ "fafjpoajfpdddapojpfjewpfadaddagfewgrgpojdddbojkpoawgdadddajpajpfajegfaddpojagjpajgawjrgesgsejphddaiojgrepadddddadogihjserghesrgnvarhgaddddafweafergeshlop;lhdddddd", "ddda");
 	}

@@ -17,7 +17,7 @@ public class App {
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		SubstringDetector s = new DefaultSubstringDetector();
-		System.out.println(s.detectSubstringBM("abcdddabdddaabcddbcaddda", "ddda"));
+		System.out.println(Arrays.toString(s.detectSubstringBM("abcdddabdddaabcddbcaddda", "ddda")));
 		System.out.println(Arrays.toString(s.detectSubstringKMP("abcdddabdddaabcddbcaddda", "ddda")));
 		System.out.println(Arrays.toString(s.detectSubstringLinear("abcdddabdddaabcddbcaddda", "ddda")));
 	}

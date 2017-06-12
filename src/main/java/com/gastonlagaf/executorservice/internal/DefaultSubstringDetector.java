@@ -2,6 +2,7 @@ package com.gastonlagaf.executorservice.internal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.gastonlagaf.executorservice.api.SubstringDetector;
 
@@ -23,31 +24,37 @@ public class DefaultSubstringDetector implements SubstringDetector {
 	}
 	
 	@Override
-	public int detectSubstringBM(String text, String needle) {
+	public int[] detectSubstringBM(String text, String needle) {
 		int[] result = new int[text.length()];
 		Map<Character, Integer> offsetTable = new HashMap<>(needle.length());
-		for(int i = 0, j = needle.length() - 1; i < needle.length() - 1; i++, j--) {
-			offsetTable.put(needle.charAt(i), j);
+		for(int i = 1; i <= needle.length(); i++) {
+			offsetTable.putIfAbsent(needle.charAt(i - 1), i);
 		}
-		offsetTable.put(needle.charAt(needle.length() - 1), needle.length());
-		int i = needle.length() - 1;
-		int j = 0;
-		int k = i;
-		while(i > 0 && j < text.length()) {
-			if(text.charAt(k) == text.charAt(i)) {
-				for(int n = i, t = k; n > 0; n--, t--) {
-					if(text.charAt(t) == needle.charAt(n)) { break; }
-					k--;
-					j--;
+		int resultIterable = 0;
+		int needleIterable = needle.length() - 1;
+		int textIterable = needleIterable;
+		while(textIterable < text.length()) {
+			int currentBadSymbolIdx = textIterable;
+			if(text.charAt(textIterable) == needle.charAt(needleIterable)) {
+				int matchIncrementor = 0;
+				while(needleIterable >= 0 && text.charAt(textIterable) == needle.charAt(needleIterable)) {
+					textIterable--;
+					needleIterable--;
+					matchIncrementor++;
 				}
-				i += offsetTable.get(text.charAt(i));
+				if(matchIncrementor == needle.length()) {
+					result[resultIterable] = ++textIterable;
+					textIterable = currentBadSymbolIdx + 1;
+					resultIterable++;
+				} else {
+					textIterable = currentBadSymbolIdx + Optional.ofNullable(offsetTable.get(text.charAt(currentBadSymbolIdx))).orElse(needle.length());
+				}
+				needleIterable = needle.length() - 1;
+			} else {
+				textIterable = currentBadSymbolIdx + Optional.ofNullable(offsetTable.get(text.charAt(currentBadSymbolIdx))).orElse(needle.length());
 			}
 		}
-		if (k >= text.length() - needle.length()) {
-			return -1;
-		} else {
-			return k + 1;
-		}
+		return result;
 	}
 	
 	@Override
