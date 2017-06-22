@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
 
+import com.gastonlagaf.executorservice.api.Sorter;
 import com.gastonlagaf.executorservice.api.SubstringDetector;
+import com.gastonlagaf.executorservice.internal.DefaultSorter;
 import com.gastonlagaf.executorservice.internal.DefaultSubstringDetector;
 
 public class App {
@@ -16,10 +18,8 @@ public class App {
 	});
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		SubstringDetector s = new DefaultSubstringDetector();
-		System.out.println(Arrays.toString(s.detectSubstringBM("abcdddabdddaabcddbcaddda", "ddda")));
-		System.out.println(Arrays.toString(s.detectSubstringKMP("abcdddabdddaabcddbcaddda", "ddda")));
-		System.out.println(Arrays.toString(s.detectSubstringLinear("abcdddabdddaabcddbcaddda", "ddda")));
+		Sorter sorter = new DefaultSorter();
+		System.out.println(Arrays.toString(sorter.fastSort(new int[] { 9, 4, 5, 3, 6, 1, 7, 2, 8 })));
 	}
 
 }

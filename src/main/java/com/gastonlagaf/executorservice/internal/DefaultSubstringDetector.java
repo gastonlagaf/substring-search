@@ -1,9 +1,5 @@
 package com.gastonlagaf.executorservice.internal;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import com.gastonlagaf.executorservice.api.SubstringDetector;
 
 public class DefaultSubstringDetector implements SubstringDetector {
@@ -25,34 +21,30 @@ public class DefaultSubstringDetector implements SubstringDetector {
 	
 	@Override
 	public int[] detectSubstringBM(String text, String needle) {
-		int[] result = new int[text.length()];
-		Map<Character, Integer> offsetTable = new HashMap<>(needle.length());
-		for(int i = 1; i <= needle.length(); i++) {
-			offsetTable.putIfAbsent(needle.charAt(i - 1), i);
+		char[] textArr = text.toCharArray();
+		char[] needleArr = needle.toCharArray();
+		int[] result = new int[textArr.length];
+		int[] offsetTable = new int[255];
+		for(int i = 0; i < offsetTable.length; i++) {
+			offsetTable[i] = needleArr.length;
+		}
+		for(int i = needleArr.length; i > 0; i--) {
+			offsetTable[needleArr[i - 1]] = i;
 		}
 		int resultIterable = 0;
-		int needleIterable = needle.length() - 1;
+		int needleIterable = needleArr.length - 1;
 		int textIterable = needleIterable;
-		while(textIterable < text.length()) {
-			int currentBadSymbolIdx = textIterable;
-			if(text.charAt(textIterable) == needle.charAt(needleIterable)) {
-				int matchIncrementor = 0;
-				while(needleIterable >= 0 && text.charAt(textIterable) == needle.charAt(needleIterable)) {
-					textIterable--;
-					needleIterable--;
-					matchIncrementor++;
-				}
-				if(matchIncrementor == needle.length()) {
-					result[resultIterable] = ++textIterable;
-					textIterable = currentBadSymbolIdx + 1;
-					resultIterable++;
-				} else {
-					textIterable = currentBadSymbolIdx + Optional.ofNullable(offsetTable.get(text.charAt(currentBadSymbolIdx))).orElse(needle.length());
-				}
-				needleIterable = needle.length() - 1;
-			} else {
-				textIterable = currentBadSymbolIdx + Optional.ofNullable(offsetTable.get(text.charAt(currentBadSymbolIdx))).orElse(needle.length());
+		while(textIterable < textArr.length) {
+			int curIdx = textIterable;
+			while(needleIterable != 0 & textArr[textIterable] == needleArr[needleIterable]) {
+				needleIterable--;
+				textIterable--;
 			}
+			if(needleIterable == 0) {
+				result[resultIterable++] = textIterable;
+			}
+			textIterable = curIdx + offsetTable[textArr[curIdx]];
+			needleIterable = needleArr.length - 1;
 		}
 		return result;
 	}

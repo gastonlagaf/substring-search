@@ -1,6 +1,10 @@
 package com.gastonlagaf.executorservice.internal;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -16,33 +20,34 @@ public class SubstringDetectorBenchmark {
 	@State(Scope.Benchmark)
 	public static class SubstringDetectorProvider {
 		private SubstringDetector sd = new DefaultSubstringDetector();
+		private String givenText;
+		
+		{
+			InputStream is = getClass().getClassLoader().getResourceAsStream("CHANGELOG.txt");
+			this.givenText = new BufferedReader(new InputStreamReader(is))
+					  .lines().collect(Collectors.joining("\n"));
+		}
 	}
 	
 	@Benchmark
-	@BenchmarkMode(Mode.AverageTime)
+	@BenchmarkMode(Mode.Throughput)
 	@OutputTimeUnit(TimeUnit.NANOSECONDS)
 	public void measureAverageTimeKMP(SubstringDetectorProvider sdp) {
-		sdp.sd.detectSubstringKMP("abcdddabdddaabcddbcadddaaaabcbabdbababbbaadbddbddabdabadddabdabababababfbebsbabsdbfaefbawefbddddabadbabefawebgaewfbawebfawefbawefbawefbawefbawefbfaew"
-				+ "bfaewbfbafbafawuibfawibfawgiorboaebgfuoauwgpawrgfaubhfpgawghfabaaaabbbdbdbadddbaadababbaaabbbaabbbbabebfpoabupfbabbbaaabbaabdddabbdbaebdddbbbdabibaevvbddbaadddda"
-				+ "fafjpoajfpdddapojpfjewpfadaddagfewgrgpojdddbojkpoawgdadddajpajpfajegfaddpojagjpajgawjrgesgsejphddaiojgrepadddddadogihjserghesrgnvarhgaddddafweafergeshlop;lhdddddd", "ddda");
+		sdp.sd.detectSubstringKMP(sdp.givenText, "issue");
 	}
 	
 	@Benchmark
-	@BenchmarkMode(Mode.AverageTime)
-	@OutputTimeUnit(TimeUnit.NANOSECONDS)
+	@BenchmarkMode(Mode.Throughput)
+	@OutputTimeUnit(TimeUnit.SECONDS)
 	public void measureAverageTimeOfLinearAlgorithm(SubstringDetectorProvider sdp) {
-		sdp.sd.detectSubstringLinear("abcdddabdddaabcddbcadddaaaabcbabdbababbbaadbddbddabdabadddabdabababababfbebsbabsdbfaefbawefbddddabadbabefawebgaewfbawebfawefbawefbawefbawefbawefbfaew"
-				+ "bfaewbfbafbafawuibfawibfawgiorboaebgfuoauwgpawrgfaubhfpgawghfabaaaabbbdbdbadddbaadababbaaabbbaabbbbabebfpoabupfbabbbaaabbaabdddabbdbaebdddbbbdabibaevvbddbaadddda"
-				+ "fafjpoajfpdddapojpfjewpfadaddagfewgrgpojdddbojkpoawgdadddajpajpfajegfaddpojagjpajgawjrgesgsejphddaiojgrepadddddadogihjserghesrgnvarhgaddddafweafergeshlop;lhdddddd", "ddda");
+		sdp.sd.detectSubstringLinear(sdp.givenText, "issue");
 	}
 	
 	@Benchmark
-	@BenchmarkMode(Mode.AverageTime)
-	@OutputTimeUnit(TimeUnit.NANOSECONDS)
+	@BenchmarkMode(Mode.Throughput)
+	@OutputTimeUnit(TimeUnit.SECONDS)
 	public void measureAverageTimeOfBowerMourAlgorithm(SubstringDetectorProvider sdp) {
-		sdp.sd.detectSubstringBM("abcdddabdddaabcddbcadddaaaabcbabdbababbbaadbddbddabdabadddabdabababababfbebsbabsdbfaefbawefbddddabadbabefawebgaewfbawebfawefbawefbawefbawefbawefbfaew"
-				+ "bfaewbfbafbafawuibfawibfawgiorboaebgfuoauwgpawrgfaubhfpgawghfabaaaabbbdbdbadddbaadababbaaabbbaabbbbabebfpoabupfbabbbaaabbaabdddabbdbaebdddbbbdabibaevvbddbaadddda"
-				+ "fafjpoajfpdddapojpfjewpfadaddagfewgrgpojdddbojkpoawgdadddajpajpfajegfaddpojagjpajgawjrgesgsejphddaiojgrepadddddadogihjserghesrgnvarhgaddddafweafergeshlop;lhdddddd", "ddda");
+		sdp.sd.detectSubstringBM(sdp.givenText, "issue");
 	}
 	
 }
