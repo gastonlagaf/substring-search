@@ -1,10 +1,11 @@
 package com.gastonlagaf.executorservice.api;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-public interface GraphWalker<T> {
+import com.gastonlagaf.executorservice.entity.GraphNode;
+
+public interface GraphWalker {
 	
-	List<T> definePath(Map<T, List<T>> graph);
+	Set<GraphNode> definePath(Set<GraphNode> graph);
 	
 }

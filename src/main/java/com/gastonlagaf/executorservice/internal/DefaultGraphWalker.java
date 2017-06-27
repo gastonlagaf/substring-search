@@ -1,15 +1,15 @@
 package com.gastonlagaf.executorservice.internal;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import com.gastonlagaf.executorservice.api.GraphWalker;
+import com.gastonlagaf.executorservice.entity.GraphNode;
 
-public class DefaultGraphWalker<T> implements GraphWalker<T> {
+public class DefaultGraphWalker implements GraphWalker {
 
 	@Override
-	public List<T> definePath(Map<T, List<T>> graph) {
-		// TODO Auto-generated method stub
+	public Set<GraphNode> definePath(Set<GraphNode> graph) {
+		
 		return null;
 	}
 	
