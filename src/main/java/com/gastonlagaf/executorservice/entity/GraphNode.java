@@ -34,5 +34,10 @@ public class GraphNode {
 	public void setNeighbours(Map<GraphNode, Integer> neighbours) {
 		this.neighbours = neighbours;
 	}
+
+	@Override
+	public String toString() {
+		return "GraphNode [name=" + name + "]";
+	}
 	
 }
