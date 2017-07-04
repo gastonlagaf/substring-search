@@ -33,5 +33,9 @@ public class RadioStation {
 	public void setStatesCovered(Set<String> statesCovered) {
 		this.statesCovered = statesCovered;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "RadioStation [name=" + name + "]";
+	}
 }

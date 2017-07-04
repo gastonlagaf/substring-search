@@ -1,16 +1,37 @@
 package com.gastonlagaf.executorservice;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.gastonlagaf.executorservice.api.GraphWalker;
+import com.gastonlagaf.executorservice.api.StationsSetPatron;
 import com.gastonlagaf.executorservice.entity.GraphNode;
+import com.gastonlagaf.executorservice.entity.RadioStation;
 import com.gastonlagaf.executorservice.internal.DefaultGraphWalker;
+import com.gastonlagaf.executorservice.internal.DefaultStationsSetPatron;
 
 public class App {
 	
 	public static void main(String[] args) {
+		defineRadioStationsTest();
+	}
+	
+	private static void defineRadioStationsTest() {
+		Set<String> states = new HashSet<>(Arrays.asList("al", "bc", "ce", "wt", "iw", "nm", "ju", "hn", "sb", "qq"));
+		RadioStation r1 = new RadioStation("BBC 1", new HashSet<>(Arrays.asList("bc", "wt", "nm", "hn", "qq", "ce", "ju")));
+		RadioStation r2 = new RadioStation("BBC 1 Extra", new HashSet<>(Arrays.asList("al", "bc", "wt", "sb")));
+		RadioStation r3 = new RadioStation("BBC 2", new HashSet<>(Arrays.asList("ju", "hn", "ju")));
+		RadioStation r4 = new RadioStation("BBC News", new HashSet<>(Arrays.asList("qq", "iw", "nm")));
+		
+		Set<RadioStation> stations = new HashSet<>(Arrays.asList(r1, r2, r3, r4));
+		
+		StationsSetPatron sSP = new DefaultStationsSetPatron();
+		System.out.println(sSP.defineStations(stations, states));
+	}
+	
+	private static void defineGraphPathTest() {
 		Set<GraphNode> graph = new LinkedHashSet<>();
 		
 		GraphWalker walker = new DefaultGraphWalker();
