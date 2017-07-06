@@ -9,13 +9,30 @@ import com.gastonlagaf.executorservice.api.GraphWalker;
 import com.gastonlagaf.executorservice.api.StationsSetPatron;
 import com.gastonlagaf.executorservice.entity.GraphNode;
 import com.gastonlagaf.executorservice.entity.RadioStation;
+import com.gastonlagaf.executorservice.entity.ShopItem;
 import com.gastonlagaf.executorservice.internal.DefaultGraphWalker;
 import com.gastonlagaf.executorservice.internal.DefaultStationsSetPatron;
+import com.gastonlagaf.executorservice.util.PreferenceMatrix;
 
 public class App {
 	
 	public static void main(String[] args) {
-		defineRadioStationsTest();
+		dynamicProgrammingTest();
+	}
+	
+	private static void dynamicProgrammingTest() {
+		PreferenceMatrix<ShopItem> preferenceMatrix = new PreferenceMatrix<>(0.2, 6.0, true);
+		ShopItem item1 = new ShopItem("Fan", 1.3, 900d);
+		ShopItem item2 = new ShopItem("Iron", 1d, 850d);
+		ShopItem item3 = new ShopItem("Coffemachine", 3d, 1700d);
+		ShopItem item4 = new ShopItem("Boiler", 2d, 1150d);
+		ShopItem item5 = new ShopItem("Monitor", 5d, 1450d);
+		preferenceMatrix.add(item1, item1.getWeight(), item1.getPrice());
+		preferenceMatrix.add(item2, item2.getWeight(), item2.getPrice());
+		preferenceMatrix.add(item3, item3.getWeight(), item3.getPrice());
+		preferenceMatrix.add(item4, item4.getWeight(), item4.getPrice());
+		preferenceMatrix.add(item5, item5.getWeight(), item5.getPrice());
+		System.out.println(preferenceMatrix.selectOptimumResultForUnitValue(1.3));
 	}
 	
 	private static void defineRadioStationsTest() {

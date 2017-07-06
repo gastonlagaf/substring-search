@@ -29,21 +29,21 @@ public class SubstringDetectorBenchmark {
 		}
 	}
 	
-	@Benchmark
+	//@Benchmark
 	@BenchmarkMode(Mode.Throughput)
-	@OutputTimeUnit(TimeUnit.NANOSECONDS)
+	@OutputTimeUnit(TimeUnit.SECONDS)
 	public void measureAverageTimeKMP(SubstringDetectorProvider sdp) {
 		sdp.sd.detectSubstringKMP(sdp.givenText, "issue");
 	}
 	
-	@Benchmark
+	//@Benchmark
 	@BenchmarkMode(Mode.Throughput)
 	@OutputTimeUnit(TimeUnit.SECONDS)
 	public void measureAverageTimeOfLinearAlgorithm(SubstringDetectorProvider sdp) {
 		sdp.sd.detectSubstringLinear(sdp.givenText, "issue");
 	}
 	
-	@Benchmark
+	//@Benchmark
 	@BenchmarkMode(Mode.Throughput)
 	@OutputTimeUnit(TimeUnit.SECONDS)
 	public void measureAverageTimeOfBowerMourAlgorithm(SubstringDetectorProvider sdp) {
